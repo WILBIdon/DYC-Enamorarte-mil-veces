@@ -440,9 +440,8 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 /* ===================================================================
    MÚSICA
    =================================================================== */
-#musica{
+#musica, #compartir{
   position:fixed; z-index:50;
-  right:calc(env(safe-area-inset-right,0px) + clamp(14px,4vw,26px));
   bottom:calc(env(safe-area-inset-bottom,0px) + clamp(14px,4vw,26px));
   width:clamp(56px,15vw,66px); aspect-ratio:1;
   display:grid; place-items:center;
@@ -452,11 +451,40 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   background-size:200% 100%;
   border:1px solid rgba(255,248,230,.5);
   box-shadow:0 12px 30px -8px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,250,232,.7);
+  display:grid; place-items:center; border-radius:50%;
   opacity:0; transform:scale(.8);
   transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.25,1), border-color .3s ease, color .3s ease;
 }
-#musica.visible{ opacity:1; transform:none; }
-#musica[hidden]{ display:none !important; }
+#musica{ right:calc(env(safe-area-inset-right,0px) + clamp(14px,4vw,26px)); }
+#compartir{ left:calc(env(safe-area-inset-left,0px) + clamp(14px,4vw,26px)); }
+#musica.visible, #compartir.visible{ opacity:1; transform:none; }
+#musica[hidden], #compartir[hidden]{ display:none !important; }
+@media (hover:hover){
+  #compartir:hover{ background-position:100% 0; box-shadow:0 16px 36px -8px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,250,232,.85); }
+}
+#compartir:active{ transform:scale(.94); }
+#compartir svg{ width:46%; height:46%; }
+
+/* Aviso breve cuando se copia el enlace */
+#aviso{
+  position:fixed; z-index:55;
+  left:50%; transform:translate(-50%,14px);
+  bottom:calc(env(safe-area-inset-bottom,0px) + clamp(84px,22vw,104px));
+  padding:.7em 1.3em;
+  font-family:var(--sans); font-size:clamp(.72rem,2.6vw,.84rem);
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--oro-fuerte);
+  background:rgba(20,14,9,.92);
+  border:1px solid var(--oro-tenue);
+  border-radius:999px;
+  box-shadow:0 12px 30px -10px rgba(0,0,0,.8);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  opacity:0; pointer-events:none;
+  transition:opacity .4s ease, transform .4s cubic-bezier(.2,.8,.25,1);
+  white-space:nowrap;
+}
+#aviso.visible{ opacity:1; transform:translate(-50%,0); }
+#aviso[hidden]{ display:none !important; }
 @media (hover:hover){
   #musica:hover{ background-position:100% 0; box-shadow:0 16px 36px -8px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,250,232,.85); }
 }
@@ -721,6 +749,8 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   #petalos{ opacity:1 !important; }
   .petalo{ animation-duration:52s !important; animation-iteration-count:infinite !important; }
   .petalo i{ animation-duration:18s !important; animation-iteration-count:infinite !important; }
+  /* El botón de la canción sigue girando, solo que mucho más despacio. */
+  #musica.sonando svg{ animation-duration:26s !important; animation-iteration-count:infinite !important; }
   #fondoFloral{ opacity:1 !important; }
 }
 </style>
@@ -824,6 +854,17 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   <span class="petalo" style="--x:66.6%;--t:18.9s;--d:-15.1s;--s:1.08;--o:0.33;--tono:linear-gradient(135deg, rgba(255,230,232,.9), rgba(236,182,190,.6))"><i></i></span>
   <span class="petalo" style="--x:27.1%;--t:26.3s;--d:-5.4s;--s:0.97;--o:0.27;--tono:linear-gradient(135deg, rgba(255,245,235,.9), rgba(241,212,186,.58))"><i></i></span>
 </div>
+
+<!-- ============ COMPARTIR ============ -->
+<button id="compartir" type="button" hidden aria-label="Compartir la invitación">
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="18" cy="5.3" r="2.8" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="6" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/>
+    <circle cx="18" cy="18.7" r="2.8" stroke="currentColor" stroke-width="1.8"/>
+    <path d="m8.5 10.6 7-3.9M8.5 13.4l7 3.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+</button>
+<div id="aviso" role="status" aria-live="polite" hidden></div>
 
 <!-- ============ MÚSICA ============ -->
 <button id="musica" type="button" hidden aria-label="Silenciar música" aria-pressed="false">
@@ -964,8 +1005,8 @@ const CONFIG = {
   esperaMusica: 5000,
 
   // Volumen de la canción, de 0 (mudo) a 1 (máximo).
-  // 0.05 ya es muy bajito; súbelo a 0.10 si lo quieres más presente.
-  volumenMusica: 0.05,
+  // 0.08 se oye de fondo sin estorbar; 0.12 ya es más presente.
+  volumenMusica: 0.08,
 };
 
 /* =================================================================== */
@@ -981,6 +1022,8 @@ const btnSaltar  = $('#saltar');
 const fundido    = $('#fundido');
 const tarjeta    = $('#tarjeta');
 const btnMusica  = $('#musica');
+const btnCompartir = $('#compartir');
+const aviso      = $('#aviso');
 const tachon     = $('#tachon');
 
 const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1123,6 +1166,7 @@ function entrarTarjeta(){
     tarjeta.hidden = false;
     document.body.classList.add('leyendo');
     document.documentElement.classList.add('revelado');
+    mostrarCompartir();
     arrancarMusica();
     return;
   }
@@ -1148,6 +1192,7 @@ function entrarTarjeta(){
       fundido.classList.add('disolviendo');
     }));
 
+    mostrarCompartir();
     setTimeout(arrancarMusica, CONFIG.esperaMusica);
   }, 940);
 }
@@ -1206,6 +1251,45 @@ btnMusica.addEventListener('click', () => {
     sonando = true;
   }
   pintarBotonMusica();
+});
+
+/* ---------- Compartir ---------- */
+function mostrarCompartir(){
+  btnCompartir.hidden = false;
+  requestAnimationFrame(() => btnCompartir.classList.add('visible'));
+}
+
+let avisoTemporizador = null;
+function decir(texto){
+  aviso.textContent = texto;
+  aviso.hidden = false;
+  clearTimeout(avisoTemporizador);
+  requestAnimationFrame(() => aviso.classList.add('visible'));
+  avisoTemporizador = setTimeout(() => {
+    aviso.classList.remove('visible');
+    setTimeout(() => { aviso.hidden = true; }, 450);
+  }, 2600);
+}
+
+btnCompartir.addEventListener('click', async () => {
+  const enlace = location.origin + location.pathname;
+  const datos = {
+    title: 'Daniela y Camilo · Enamorarte mil veces',
+    text: 'Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Rionegro.',
+    url: enlace,
+  };
+
+  if (navigator.share){
+    try { await navigator.share(datos); return; }
+    catch (e) { if (e && e.name === 'AbortError') return; }   // la cerró el invitado
+  }
+
+  try {
+    await navigator.clipboard.writeText(enlace);
+    decir('Enlace copiado');
+  } catch (_) {
+    decir(enlace);
+  }
 });
 
 /* ---------- Modales ---------- */
