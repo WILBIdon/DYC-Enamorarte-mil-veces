@@ -106,8 +106,11 @@ function sendFile(req, res, filePath) {
 
   const ext = path.extname(filePath).toLowerCase();
   const type = MIME[ext] || 'application/octet-stream';
-  // El HTML nunca se cachea: así cada recarga trae los cambios.
-  const cache = ext === '.html' ? 'no-cache, no-store, must-revalidate' : 'public, max-age=3600';
+  // El HTML nunca se cachea; los medios, una semana: quien vuelva a abrir
+  // la tarjeta no baja otra vez los 8 MB del video.
+  const cache = ext === '.html'
+    ? 'no-cache, no-store, must-revalidate'
+    : 'public, max-age=604800';
   const range = req.headers.range;
 
   if (range) {

@@ -75,4 +75,18 @@ español y sin tecnicismos alrededor.
 ## Despliegue
 
 Railway, con `npm start`. El puerto lo inyecta el hosting por la variable
-`PORT`; en local cae a 3100.
+`PORT`; en local cae a 3100. **No hace falta volumen**: la tarjeta no escribe
+nada en disco, solo lee, y el video, la canción y las imágenes viajan dentro
+del repositorio.
+
+El dominio se saca en *Settings → Networking → Generate Domain*. El servidor
+arma solo las direcciones de Open Graph con el dominio que reciba, así que
+sirve cualquiera sin configurar nada.
+
+### Velocidad
+
+El video y el fondo floral empiezan a bajar mientras el invitado todavía ve
+la portada, de modo que al tocar *Abrir tarjeta* no hay espera. Los medios se
+guardan en el navegador una semana: quien vuelva a entrar no baja otra vez
+los 8 MB del video. El HTML nunca se cachea, así los cambios se ven al
+recargar.

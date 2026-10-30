@@ -1051,11 +1051,18 @@ const mediosListos = fetch('/api/media')
   })
   .catch(() => {});
 
-/* Precarga el fondo floral mientras corre el video */
+/* El fondo floral empieza a bajar apenas se ve la portada, no al hacer clic:
+   así la tarjeta entra sin esperas. Le damos un respiro para que la imagen
+   de la portada, que se necesita de inmediato, tenga la vía libre. */
+let fondoPedido = false;
 function precargarFondo(){
+  if (fondoPedido) return;
+  fondoPedido = true;
   const img = new Image();
   img.src = 'Arco floral y velas romántico.png';
 }
+if (document.readyState === 'complete') setTimeout(precargarFondo, 1200);
+else addEventListener('load', () => setTimeout(precargarFondo, 1200));
 
 /* ---------- 1 · Abrir ---------- */
 let abierta = false;
