@@ -1,0 +1,53 @@
+# Daniela & Camilo — Tarjeta de matrimonio
+
+Invitación digital. Sábado 12 de diciembre de 2026, Rionegro (Antioquia).
+
+## Cómo se ve
+
+1. **Portada** — el sobre lacrado y un botón dorado, *Abrir tarjeta*.
+2. **Clip** — al tocar el botón arranca el video con sonido.
+3. **Tarjeta** — al terminar el video la pantalla funde a blanco y entra la
+   invitación sobre el arco floral. Tres segundos después empieza la canción.
+
+Pensada para celular (9:16). Entra completa en una sola pantalla desde
+320 × 693 px en adelante.
+
+## Correr en local
+
+```bash
+npm start
+```
+
+Queda en <http://localhost:3100>.
+
+## Los medios
+
+El servidor lee la carpeta y toma el primer video y el primer audio que
+encuentre (`/api/media`), así que para cambiar la canción o el clip basta con
+reemplazar el archivo — no hay que tocar código.
+
+| Archivo | Para qué |
+| --- | --- |
+| `clip inicial.jpeg` | Fondo de la portada |
+| `nuevo video.mp4` | El video de apertura |
+| `Arco floral y velas romántico.png` | Fondo de la tarjeta |
+| `Enamorarte Mil Veces.mp3` | La canción |
+
+## Qué se puede editar sin saber código
+
+Todo lo editable está junto, en el bloque `CONFIG` al final de `index.html`:
+
+| Campo | Qué controla |
+| --- | --- |
+| `whatsapp` | Número que recibe las confirmaciones (con indicativo, sin `+`) |
+| `mapas.ceremonia` / `mapas.recepcion` | Los dos enlaces de Google Maps |
+| `esperaMusica` | Milisegundos antes de que arranque la canción |
+| `volumenMusica` | Volumen, de 0 a 1 |
+
+Los textos (nombres, fecha, horas, la frase del centro) están en el HTML, en
+español y sin tecnicismos alrededor.
+
+## Despliegue
+
+Railway, con `npm start`. El puerto lo inyecta el hosting por la variable
+`PORT`; en local cae a 3100.
