@@ -29,6 +29,51 @@ const MIME = {
 
 const AUDIO_EXT = ['.mp3', '.m4a', '.aac', '.wav', '.ogg'];
 const VIDEO_EXT = ['.mp4', '.mov', '.webm'];
+const OG_EXT    = ['.jpg', '.jpeg', '.png', '.webp'];
+
+// La imagen que se ve al compartir el enlace: cualquier archivo que se
+// llame og.jpg, og.png, og.jpeg o og.webp.
+function buscarOg() {
+  try {
+    return (
+      fs
+        .readdirSync(ROOT)
+        .find((f) => /^og\./i.test(f) && OG_EXT.includes(path.extname(f).toLowerCase())) || null
+    );
+  } catch (_) {
+    return null;
+  }
+}
+
+// Open Graph exige direcciones absolutas, y el dominio cambia según dónde
+// corra: en local es localhost, en Railway es el dominio que te asignen.
+// Por eso el HTML lleva marcadores que se rellenan al servirlo.
+function enviarHtml(req, res, filePath) {
+  let html;
+  try {
+    html = fs.readFileSync(filePath, 'utf8');
+  } catch (_) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+    return res.end('No encontrado');
+  }
+
+  const primero = (v, alt) => String(v || alt).split(',')[0].trim();
+  const proto = primero(req.headers['x-forwarded-proto'], 'http');
+  const host = primero(req.headers['x-forwarded-host'] || req.headers.host, 'localhost:' + PORT);
+  const og = buscarOg();
+
+  html = html
+    .split('__ORIGEN__').join(proto + '://' + host)
+    .split('__OG__').join(og ? encodeURIComponent(og) : 'og.jpg');
+
+  const cuerpo = Buffer.from(html, 'utf8');
+  res.writeHead(200, {
+    'Content-Type': MIME['.html'],
+    'Content-Length': cuerpo.length,
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+  });
+  res.end(cuerpo);
+}
 
 // Busca en la carpeta el primer archivo de audio / video disponible,
 // para que agregar la canción sea solo soltarla aquí.
@@ -113,6 +158,10 @@ http
       return res.end('Prohibido');
     }
 
+    if (path.extname(filePath).toLowerCase() === '.html') {
+      return enviarHtml(req, res, filePath);
+    }
+
     sendFile(req, res, filePath);
   })
   .listen(PORT, '0.0.0.0', () => {
@@ -120,4 +169,5 @@ http
     console.log(`Tarjeta lista en el puerto ${PORT}`);
     console.log(`  video: ${media.video || '(ninguno)'}`);
     console.log(`  musica: ${media.audio || '(pendiente: suelta el mp3 en esta carpeta)'}`);
+    console.log(`  og:     ${buscarOg() || '(pendiente: guarda la imagen como og.jpg)'}`);
   });

@@ -32,6 +32,21 @@ reemplazar el archivo — no hay que tocar código.
 | `nuevo video.mp4` | El video de apertura |
 | `Arco floral y velas romántico.png` | Fondo de la tarjeta |
 | `Enamorarte Mil Veces.mp3` | La canción |
+| `og.jpg` | Lo que se ve al compartir el enlace |
+
+### La imagen al compartir
+
+Guarda la imagen en esta carpeta como **`og.jpg`** (también sirve `og.png`
+o `og.webp`). El servidor la detecta sola y arma la dirección absoluta que
+exige Open Graph, sea en local o en Railway — no hay que escribir el dominio
+en ningún lado.
+
+Exportala en 1200 × 630 px: es la proporción que usan WhatsApp, Facebook e
+Instagram, y evita que la recorten mal.
+
+Si cambias la imagen después de haber compartido el enlace, WhatsApp guarda
+la anterior en caché un buen rato. Para forzarla, comparte el enlace con algo
+detrás, por ejemplo `?v=2`.
 
 ## Qué se puede editar sin saber código
 
