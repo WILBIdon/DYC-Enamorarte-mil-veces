@@ -109,7 +109,10 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 }
 #portada .lienzo{
   position:absolute; inset:0;
-  background:url("clip%20inicial.jpeg") center/cover no-repeat;
+  background:url("portada.jpg") center/cover no-repeat;
+  background-image:image-set(url("portada.webp") type("image/webp"),
+                             url("portada.jpg")  type("image/jpeg"));
+  background-position:center; background-size:cover; background-repeat:no-repeat;
   transform:scale(1.06);
   animation:respirar 26s ease-in-out infinite alternate;
 }
@@ -239,7 +242,10 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 
 #fondoFloral{
   position:fixed; inset:0; z-index:-2;
-  background:url("Arco%20floral%20y%20velas%20rom%C3%A1ntico.png") 50% 50%/cover no-repeat;
+  background:url("fondo.jpg") 50% 50%/cover no-repeat;
+  background-image:image-set(url("fondo.webp") type("image/webp"),
+                             url("fondo.jpg")  type("image/jpeg"));
+  background-position:50% 50%; background-size:cover; background-repeat:no-repeat;
   transform:scale(1.04);
 }
 #velvetal{
@@ -1059,7 +1065,10 @@ function precargarFondo(){
   if (fondoPedido) return;
   fondoPedido = true;
   const img = new Image();
-  img.src = 'Arco floral y velas romántico.png';
+  // Si el navegador entiende WebP pedimos ese, que es el que usará el CSS.
+  const soportaWebp = document.createElement('canvas')
+    .toDataURL('image/webp').indexOf('data:image/webp') === 0;
+  img.src = soportaWebp ? 'fondo.webp' : 'fondo.jpg';
 }
 if (document.readyState === 'complete') setTimeout(precargarFondo, 1200);
 else addEventListener('load', () => setTimeout(precargarFondo, 1200));

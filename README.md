@@ -28,9 +28,9 @@ reemplazar el archivo — no hay que tocar código.
 
 | Archivo | Para qué |
 | --- | --- |
-| `clip inicial.jpeg` | Fondo de la portada |
+| `portada.webp` / `.jpg` | Fondo de la portada |
+| `fondo.webp` / `.jpg` | Fondo de la tarjeta |
 | `nuevo video.mp4` | El video de apertura |
-| `Arco floral y velas romántico.png` | Fondo de la tarjeta |
 | `Enamorarte Mil Veces.mp3` | La canción |
 | `og.jpg` | Lo que se ve al compartir el enlace |
 
@@ -90,3 +90,9 @@ la portada, de modo que al tocar *Abrir tarjeta* no hay espera. Los medios se
 guardan en el navegador una semana: quien vuelva a entrar no baja otra vez
 los 8 MB del video. El HTML nunca se cachea, así los cambios se ven al
 recargar.
+
+Los dos fondos van en WebP, con respaldo JPEG para navegadores viejos: pesan
+921 KB entre los dos en vez de 4,9 MB, sin diferencia visible (43 y 42 dB de
+PSNR; por encima de 40 el ojo no distingue). Los originales se conservan en
+`Arco floral y velas romántico.png` y `clip inicial.jpeg` por si hay que
+volver a exportarlos; puedes borrarlos sin que la tarjeta se entere.
