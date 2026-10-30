@@ -29,10 +29,11 @@
       #c9a964 0%, #ecd7a4 16%, #fdf4dd 31%, #e3c994 47%,
       #fff8e6 61%, #dcbf85 77%, #f4e6c2 100%);
 
-  /* Los nombres: oro claro, casi champán, con destellos blancos */
-  --brillo-nombres: linear-gradient(102deg,
-      #f7e9c8 0%, #fffaed 11%, #ffffff 24%, #fdf2d5 37%,
-      #ffffff 52%, #fef6e0 66%, #f9edd0 80%, #fffcf4 100%);
+  /* Los nombres: oro muy claro con una veta de luz que recorre el texto */
+  --brillo-nombres: linear-gradient(100deg,
+      #f3dfae 0%,  #fff7e2 8%,   #ffffff 16%,  #fffdf6 22%,
+      #f6e4b8 32%, #ffffff 42%,  #fffaec 50%,  #f2dfae 60%,
+      #ffffff 70%, #fff8e6 78%,  #f5e3b6 88%,  #fffdf7 100%);
 
   --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --sans:  "Jost", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
@@ -161,7 +162,9 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   animation:destello 4.6s ease-in-out 1.4s infinite;
 }
 @keyframes destello{ 0%,62%{ transform:translateX(-120%);} 86%,100%{ transform:translateX(120%);} }
-.boton-oro:hover{ transform:translateY(-2px); background-position:100% 0; box-shadow:0 16px 42px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,250,232,.8); }
+@media (hover:hover){
+  .boton-oro:hover{ transform:translateY(-2px); background-position:100% 0; box-shadow:0 16px 42px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,250,232,.8); }
+}
 .boton-oro:active{ transform:translateY(0) scale(.985); }
 .boton-oro:focus-visible{ outline:2px solid var(--oro-claro); outline-offset:4px; }
 
@@ -276,10 +279,24 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   margin:0;
   padding:0 .06em .08em;
   background:var(--brillo-nombres);
+  background-size:260% 100%;
+  background-position:0% 0;
   -webkit-background-clip:text; background-clip:text;
-  filter:drop-shadow(0 2px 9px rgba(14,9,5,.8)) drop-shadow(0 0 22px rgba(255,235,185,.42));
+  /* El resplandor va en el contenedor: en iOS, filtro + recorte de texto
+     en el mismo elemento apaga el degradado. */
+  animation:veta 7s ease-in-out infinite;
 }
-@supports not (background-clip:text){ .nombres-novios{ color:#fffaed; -webkit-text-fill-color:#fffaed; } }
+.halo-nombres{
+  display:block;
+  filter:drop-shadow(0 2px 8px rgba(14,9,5,.85))
+         drop-shadow(0 0 16px rgba(255,238,196,.55))
+         drop-shadow(0 0 34px rgba(255,226,160,.3));
+}
+@keyframes veta{
+  0%,100%{ background-position:0% 0; }
+  50%    { background-position:100% 0; }
+}
+@supports not (background-clip:text){ .nombres-novios{ color:#fffdf7; -webkit-text-fill-color:#fffdf7; } }
 .ampersand{
   display:block;
   font-family:var(--serif);
@@ -287,8 +304,8 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   font-weight:300;
   font-size:clamp(1.02rem,min(4.3vw,2.2vh),1.7rem);
   letter-spacing:.06em;
-  color:#fbf0d4;
-  -webkit-text-fill-color:#fbf0d4;   /* no hereda el degradado */
+  color:#fff6dd;
+  -webkit-text-fill-color:#fff6dd;   /* no hereda el degradado */
   background:none;
   margin:.16em 0 .1em;
   opacity:1;
@@ -350,13 +367,16 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 
 /* --- Botones pequeños --- */
 .acciones{
-  display:flex; flex-wrap:wrap; justify-content:center;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(8.9rem, 1fr));
   gap:clamp(8px,2.2vw,11px);
-  margin:clamp(18px,3.2vh,42px) 0 0;
+  max-width:23rem;
+  margin:clamp(18px,3.2vh,42px) auto 0;
 }
 .pastilla{
-  display:inline-flex; align-items:center; gap:.62em;
+  display:inline-flex; align-items:center; justify-content:center; gap:.62em;
   text-decoration:none;
+  white-space:nowrap;
   padding:.82em 1.35em;
   font-family:var(--sans);
   font-weight:400;
@@ -372,13 +392,16 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   transition:background .38s ease, border-color .38s ease, color .38s ease, transform .38s cubic-bezier(.2,.8,.25,1), box-shadow .38s ease;
 }
 .pastilla svg{ width:1em; height:1em; flex:none; opacity:.9; }
-.pastilla:hover{
-  background:rgba(32,22,14,.66);
-  border-color:var(--oro-claro);
-  color:#f6e7c4;
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px -10px rgba(0,0,0,.7);
+@media (hover:hover){
+  .pastilla:hover{
+    background:rgba(32,22,14,.66);
+    border-color:var(--oro-claro);
+    color:#f6e7c4;
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px -10px rgba(0,0,0,.7);
+  }
 }
+.pastilla:active{ transform:scale(.97); }
 .pastilla:focus-visible{ outline:2px solid var(--oro); outline-offset:3px; }
 
 .pastilla.principal{
@@ -390,7 +413,9 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   box-shadow:0 10px 26px -10px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,250,232,.6);
   transition:background-position 1s ease, transform .38s cubic-bezier(.2,.8,.25,1), box-shadow .38s ease;
 }
-.pastilla.principal:hover{ color:#3a2b18; background-position:100% 0; box-shadow:0 14px 32px -10px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,250,232,.8); }
+@media (hover:hover){
+  .pastilla.principal:hover{ color:#3a2b18; background-position:100% 0; box-shadow:0 14px 32px -10px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,250,232,.8); }
+}
 
 /* --- Cierre --- */
 .cierre{
@@ -423,13 +448,55 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 }
 #musica.visible{ opacity:1; transform:none; }
 #musica[hidden]{ display:none !important; }
-#musica:hover{ border-color:var(--oro-claro); color:#f6e7c4; background:rgba(32,22,14,.72); }
+@media (hover:hover){
+  #musica:hover{ border-color:var(--oro-claro); color:#f6e7c4; background:rgba(32,22,14,.72); }
+}
 #musica svg{ width:46%; height:46%; }
 #musica .onda{ transform-origin:center; }
 #musica.sonando .onda{ animation:ondear 2.4s ease-in-out infinite; }
 @keyframes ondear{ 0%,100%{ opacity:1;} 50%{ opacity:.35;} }
 #musica.pide-toque{ animation:llamar 2.2s ease-in-out infinite; }
 @keyframes llamar{ 0%,100%{ box-shadow:0 10px 26px -8px rgba(0,0,0,.7), 0 0 0 0 rgba(214,180,118,.55);} 50%{ box-shadow:0 10px 26px -8px rgba(0,0,0,.7), 0 0 0 13px rgba(214,180,118,0);} }
+
+
+/* ===================================================================
+   PÉTALOS
+   =================================================================== */
+#petalos{
+  position:fixed; inset:0; z-index:6;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:0;
+  transition:opacity 2.4s ease 1.2s;
+}
+.revelado #petalos{ opacity:1; }
+
+.petalo{
+  position:absolute;
+  top:-14vh;
+  left:var(--x);
+  animation:caer var(--t) linear var(--d) infinite;
+  will-change:transform;
+}
+.petalo i{
+  display:block;
+  width:calc(13px * var(--s));
+  height:calc(9px * var(--s));
+  border-radius:62% 38% 54% 46% / 72% 66% 34% 28%;
+  background:var(--tono);
+  box-shadow:0 1px 3px rgba(40,20,20,.22), inset 0 1px 1px rgba(255,255,255,.45);
+  opacity:var(--o);
+  animation:vaiven calc(var(--t) / 3.4) ease-in-out var(--d) infinite alternate;
+  will-change:transform;
+}
+@keyframes caer{
+  from{ transform:translate3d(0,0,0); }
+  to  { transform:translate3d(0,124vh,0); }
+}
+@keyframes vaiven{
+  from{ transform:translateX(-24px) rotate(-38deg); }
+  to  { transform:translateX(28px)  rotate(52deg); }
+}
 
 /* ===================================================================
    MODALES
@@ -607,6 +674,13 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   .nombres-novios{ font-size:clamp(2.05rem,min(12.2vw,6.3vh),5rem); }
   .frase{ font-size:clamp(.96rem,min(4.6vw,2.35vh),1.72rem); }
   .cierre .sello{ font-size:clamp(1.7rem,min(8.4vw,4vh),3.4rem); }
+  /* El encabezado en versalitas no cabe con el espaciado completo. */
+  .invitacion{ letter-spacing:.28em; font-size:.6rem; }
+}
+
+/* Más estrecho todavía: los botones no caben de a dos, van en columna. */
+@media (max-width:21.5rem){
+  .acciones{ grid-template-columns:1fr; max-width:17rem; }
 }
 
 /* ===================================================================
@@ -618,6 +692,7 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
     transition-duration:.01ms !important;
   }
   .entra, .papel{ opacity:1 !important; transform:none !important; filter:none !important; }
+  #petalos{ display:none; }
   #fondoFloral{ opacity:1 !important; }
 }
 </style>
@@ -662,11 +737,13 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
       <path d="M33 8c2.4-1.7 4.3-2.4 5.8-2.4M33 8c2.4 1.7 4.3 2.4 5.8 2.4M59 8c-2.4-1.7-4.3-2.4-5.8-2.4M59 8c-2.4 1.7-4.3 2.4-5.8 2.4" stroke="currentColor" stroke-width="1" opacity=".55"/>
     </svg>
 
-    <h1 class="nombres-novios oro-texto entra" style="--i:2">
-      Daniela Muñoz
-      <span class="ampersand">y</span>
-      Camilo Ortiz
-    </h1>
+    <div class="halo-nombres entra" style="--i:2">
+      <h1 class="nombres-novios oro-texto">
+        Daniela Muñoz
+        <span class="ampersand">y</span>
+        Camilo Ortiz
+      </h1>
+    </div>
 
     <hr class="regla entra" style="--i:3">
 
@@ -711,6 +788,27 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 
   </article>
 </main>
+
+<div id="petalos" aria-hidden="true">
+  <span class="petalo" style="--x:3.4%;--t:17.0s;--d:-10.8s;--s:0.71;--o:0.63;--tono:linear-gradient(135deg, rgba(255,228,230,.95), rgba(236,178,186,.72))"><i></i></span>
+  <span class="petalo" style="--x:40.7%;--t:17.9s;--d:-7.8s;--s:1.52;--o:0.54;--tono:linear-gradient(135deg, rgba(255,241,228,.95), rgba(240,208,180,.7))"><i></i></span>
+  <span class="petalo" style="--x:73.7%;--t:19.1s;--d:-2.2s;--s:1.44;--o:0.42;--tono:linear-gradient(135deg, rgba(255,252,246,.95), rgba(238,224,200,.7))"><i></i></span>
+  <span class="petalo" style="--x:72.7%;--t:12.9s;--d:-11.3s;--s:1.3;--o:0.77;--tono:linear-gradient(135deg, rgba(252,220,224,.92), rgba(225,165,178,.7))"><i></i></span>
+  <span class="petalo" style="--x:22.3%;--t:20.3s;--d:-4.1s;--s:1.09;--o:0.61;--tono:linear-gradient(135deg, rgba(255,228,230,.95), rgba(236,178,186,.72))"><i></i></span>
+  <span class="petalo" style="--x:73.1%;--t:20.0s;--d:-16.0s;--s:1.47;--o:0.53;--tono:linear-gradient(135deg, rgba(255,241,228,.95), rgba(240,208,180,.7))"><i></i></span>
+  <span class="petalo" style="--x:62.8%;--t:14.4s;--d:-2.8s;--s:0.87;--o:0.4;--tono:linear-gradient(135deg, rgba(255,252,246,.95), rgba(238,224,200,.7))"><i></i></span>
+  <span class="petalo" style="--x:31.5%;--t:19.8s;--d:-17.2s;--s:1.35;--o:0.66;--tono:linear-gradient(135deg, rgba(252,220,224,.92), rgba(225,165,178,.7))"><i></i></span>
+  <span class="petalo" style="--x:9.8%;--t:11.3s;--d:-4.0s;--s:0.74;--o:0.57;--tono:linear-gradient(135deg, rgba(255,228,230,.95), rgba(236,178,186,.72))"><i></i></span>
+  <span class="petalo" style="--x:10.9%;--t:20.7s;--d:-12.0s;--s:1.5;--o:0.5;--tono:linear-gradient(135deg, rgba(255,241,228,.95), rgba(240,208,180,.7))"><i></i></span>
+  <span class="petalo" style="--x:26.1%;--t:12.2s;--d:-4.4s;--s:1.26;--o:0.59;--tono:linear-gradient(135deg, rgba(255,252,246,.95), rgba(238,224,200,.7))"><i></i></span>
+  <span class="petalo" style="--x:90.1%;--t:18.7s;--d:-14.4s;--s:1.34;--o:0.42;--tono:linear-gradient(135deg, rgba(252,220,224,.92), rgba(225,165,178,.7))"><i></i></span>
+  <span class="petalo" style="--x:46.8%;--t:14.9s;--d:-11.5s;--s:1.38;--o:0.53;--tono:linear-gradient(135deg, rgba(255,228,230,.95), rgba(236,178,186,.72))"><i></i></span>
+  <span class="petalo" style="--x:26.4%;--t:11.6s;--d:-16.6s;--s:0.79;--o:0.69;--tono:linear-gradient(135deg, rgba(255,241,228,.95), rgba(240,208,180,.7))"><i></i></span>
+  <span class="petalo" style="--x:36.9%;--t:19.1s;--d:-14.0s;--s:1.52;--o:0.57;--tono:linear-gradient(135deg, rgba(255,252,246,.95), rgba(238,224,200,.7))"><i></i></span>
+  <span class="petalo" style="--x:21.1%;--t:18.7s;--d:-14.5s;--s:1.07;--o:0.58;--tono:linear-gradient(135deg, rgba(252,220,224,.92), rgba(225,165,178,.7))"><i></i></span>
+  <span class="petalo" style="--x:97.7%;--t:16.1s;--d:-10.9s;--s:0.97;--o:0.44;--tono:linear-gradient(135deg, rgba(255,228,230,.95), rgba(236,178,186,.72))"><i></i></span>
+  <span class="petalo" style="--x:49.7%;--t:20.2s;--d:-10.1s;--s:0.72;--o:0.63;--tono:linear-gradient(135deg, rgba(255,241,228,.95), rgba(240,208,180,.7))"><i></i></span>
+</div>
 
 <!-- ============ MÚSICA ============ -->
 <button id="musica" type="button" hidden aria-label="Silenciar música" aria-pressed="false">
