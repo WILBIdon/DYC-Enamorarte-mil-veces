@@ -41,8 +41,13 @@ o `og.webp`). El servidor la detecta sola y arma la dirección absoluta que
 exige Open Graph, sea en local o en Railway — no hay que escribir el dominio
 en ningún lado.
 
-Exportala en 1200 × 630 px: es la proporción que usan WhatsApp, Facebook e
-Instagram, y evita que la recorten mal.
+La que está ahora se armó con el mismo arco floral de la tarjeta, en
+1200 × 630 px. Para cambiarla por una foto de ustedes, basta con reemplazar
+el archivo manteniendo el nombre.
+
+Expórtala en 1200 × 630 px: es la proporción que usan WhatsApp, Facebook e
+Instagram, y evita que la recorten mal. Si usas otro tamaño, ajusta las dos
+medidas que están junto a `og:image` en `index.html`.
 
 Si cambias la imagen después de haber compartido el enlace, WhatsApp guarda
 la anterior en caché un buen rato. Para forzarla, comparte el enlace con algo

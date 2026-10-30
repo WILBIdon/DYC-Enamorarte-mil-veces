@@ -17,6 +17,9 @@
 <meta property="og:description" content="Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Rionegro.">
 <meta property="og:url" content="__ORIGEN__/">
 <meta property="og:image" content="__ORIGEN__/__OG__">
+<!-- Si cambias og.jpg por una de otro tamaño, ajusta estas dos medidas. -->
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Daniela y Camilo — Enamorarte mil veces">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Daniela y Camilo · Enamorarte mil veces">
@@ -995,22 +998,39 @@ let medios = { video: null, audio: null };
    se controla con un nodo de ganancia de Web Audio. Hay que construirlo
    dentro de un gesto del usuario. */
 function prepararAudio(){
-  if (!cancion || contexto) return;
+  if (!cancion) return;
   const AC = window.AudioContext || window.webkitAudioContext;
   if (!AC) return;                       // sin Web Audio queda audio.volume
-  try {
-    contexto = new AC();
-    const fuente = contexto.createMediaElementSource(cancion);
-    ganancia = contexto.createGain();
-    ganancia.gain.value = 0;
-    fuente.connect(ganancia);
-    ganancia.connect(contexto.destination);
-    cancion.volume = 1;                  // el fino lo hace la ganancia
-  } catch (_) {
-    contexto = null;
-    ganancia = null;
+  if (!contexto){
+    try {
+      contexto = new AC();
+      const fuente = contexto.createMediaElementSource(cancion);
+      ganancia = contexto.createGain();
+      ganancia.gain.value = 0;
+      fuente.connect(ganancia);
+      ganancia.connect(contexto.destination);
+      cancion.volume = 1;                // el fino lo hace la ganancia
+    } catch (_) {
+      contexto = null;
+      ganancia = null;
+      return;
+    }
+  }
+  despertarAudio();
+}
+
+/* En iOS el contexto nace dormido: crearlo dentro del gesto no basta, hay
+   que despertarlo ahí mismo. Si se duerme después, cualquier toque en la
+   pantalla lo revive. */
+function despertarAudio(){
+  if (contexto && contexto.state !== 'running'){
+    contexto.resume().catch(() => {});
   }
 }
+
+['pointerdown', 'touchend', 'click'].forEach((evento) =>
+  document.addEventListener(evento, despertarAudio, { passive: true })
+);
 
 function ponerVolumen(v, suave){
   v = Math.max(0, Math.min(1, v));
@@ -1035,7 +1055,6 @@ const mediosListos = fetch('/api/media')
       cancion = new Audio(encodeURIComponent(m.audio));
       cancion.loop = true;
       cancion.preload = 'auto';
-      cancion.crossOrigin = 'anonymous';
       cancion.volume = 0;
     }
   })
@@ -1153,10 +1172,20 @@ function arrancarMusica(){
   requestAnimationFrame(() => btnMusica.classList.add('visible'));
 
   prepararAudio();
-  if (contexto && contexto.state === 'suspended') contexto.resume().catch(() => {});
   ponerVolumen(0);
   cancion.play()
-    .then(() => { sonando = true; pintarBotonMusica(); subirVolumen(); })
+    .then(() => {
+      sonando = true;
+      pintarBotonMusica();
+      subirVolumen();
+      // Si iOS dejó el contexto dormido no sale sonido aunque el <audio>
+      // esté corriendo: pedimos un toque en el botón para despertarlo.
+      setTimeout(() => {
+        if (contexto && contexto.state !== 'running'){
+          btnMusica.classList.add('pide-toque');
+        }
+      }, 600);
+    })
     .catch(() => {
       // El navegador bloqueó el audio: invitamos a tocar el botón.
       sonando = false;
@@ -1168,7 +1197,7 @@ function arrancarMusica(){
 btnMusica.addEventListener('click', () => {
   if (!cancion) return;
   btnMusica.classList.remove('pide-toque');
-  if (contexto && contexto.state === 'suspended') contexto.resume().catch(() => {});
+  prepararAudio();
   if (sonando){
     cancion.pause();
     sonando = false;
