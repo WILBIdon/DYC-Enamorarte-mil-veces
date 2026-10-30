@@ -1003,10 +1003,6 @@ const CONFIG = {
 
   // Milisegundos que espera la tarjeta antes de arrancar la canción
   esperaMusica: 5000,
-
-  // Volumen de la canción, de 0 (mudo) a 1 (máximo).
-  // 0.08 se oye de fondo sin estorbar; 0.12 ya es más presente.
-  volumenMusica: 0.08,
 };
 
 /* =================================================================== */
@@ -1032,59 +1028,12 @@ $('#mapaCeremonia').href = CONFIG.mapas.ceremonia;
 $('#mapaRecepcion').href = CONFIG.mapas.recepcion;
 
 /* ---------- Medios: el servidor dice qué hay en la carpeta ---------- */
-let cancion  = null;   // el <audio>
-let contexto = null;   // AudioContext
-let ganancia = null;   // el nodo que de verdad controla el volumen
+let cancion = null;   // el <audio>
 let medios = { video: null, audio: null };
 
-/* iOS ignora audio.volume (allí es de solo lectura), así que el volumen
-   se controla con un nodo de ganancia de Web Audio. Hay que construirlo
-   dentro de un gesto del usuario. */
-function prepararAudio(){
-  if (!cancion) return;
-  const AC = window.AudioContext || window.webkitAudioContext;
-  if (!AC) return;                       // sin Web Audio queda audio.volume
-  if (!contexto){
-    try {
-      contexto = new AC();
-      const fuente = contexto.createMediaElementSource(cancion);
-      ganancia = contexto.createGain();
-      ganancia.gain.value = 0;
-      fuente.connect(ganancia);
-      ganancia.connect(contexto.destination);
-      cancion.volume = 1;                // el fino lo hace la ganancia
-    } catch (_) {
-      contexto = null;
-      ganancia = null;
-      return;
-    }
-  }
-  despertarAudio();
-}
-
-/* En iOS el contexto nace dormido: crearlo dentro del gesto no basta, hay
-   que despertarlo ahí mismo. Si se duerme después, cualquier toque en la
-   pantalla lo revive. */
-function despertarAudio(){
-  if (contexto && contexto.state !== 'running'){
-    contexto.resume().catch(() => {});
-  }
-}
-
-['pointerdown', 'touchend', 'click'].forEach((evento) =>
-  document.addEventListener(evento, despertarAudio, { passive: true })
-);
-
-function ponerVolumen(v, suave){
-  v = Math.max(0, Math.min(1, v));
-  if (ganancia && contexto){
-    const t = contexto.currentTime;
-    if (suave) ganancia.gain.setTargetAtTime(v, t, 0.7);
-    else       ganancia.gain.setValueAtTime(v, t);
-  } else if (cancion){
-    cancion.volume = v;
-  }
-}
+/* La canción suena a su propio nivel, sin que la tarjeta lo toque: así va
+   pareja con el audio del video de apertura. El volumen lo manda el
+   teléfono. */
 
 const mediosListos = fetch('/api/media')
   .then((r) => r.json())
@@ -1098,7 +1047,6 @@ const mediosListos = fetch('/api/media')
       cancion = new Audio(encodeURIComponent(m.audio));
       cancion.loop = true;
       cancion.preload = 'auto';
-      cancion.volume = 0;
     }
   })
   .catch(() => {});
@@ -1116,12 +1064,9 @@ $('#abrir').addEventListener('click', async () => {
   if (abierta) return;
   abierta = true;
 
-  // El clic desbloquea el audio: lo aprovechamos para armar el nodo de
-  // ganancia y dejar la canción lista.
+  // El clic desbloquea el audio: lo aprovechamos para dejar la canción lista.
   if (cancion) {
-    prepararAudio();
-    ponerVolumen(0);
-    cancion.play().then(() => cancion.pause()).catch(() => {});
+    cancion.play().then(() => { cancion.pause(); cancion.currentTime = 0; }).catch(() => {});
   }
 
   await mediosListos;
@@ -1207,30 +1152,13 @@ function pintarBotonMusica(){
   btnMusica.setAttribute('aria-label', sonando ? 'Silenciar música' : 'Activar música');
 }
 
-function subirVolumen(){
-  ponerVolumen(CONFIG.volumenMusica, true);
-}
-
 function arrancarMusica(){
   if (!cancion) return;
   btnMusica.hidden = false;
   requestAnimationFrame(() => btnMusica.classList.add('visible'));
 
-  prepararAudio();
-  ponerVolumen(0);
   cancion.play()
-    .then(() => {
-      sonando = true;
-      pintarBotonMusica();
-      subirVolumen();
-      // Si iOS dejó el contexto dormido no sale sonido aunque el <audio>
-      // esté corriendo: pedimos un toque en el botón para despertarlo.
-      setTimeout(() => {
-        if (contexto && contexto.state !== 'running'){
-          btnMusica.classList.add('pide-toque');
-        }
-      }, 600);
-    })
+    .then(() => { sonando = true; pintarBotonMusica(); })
     .catch(() => {
       // El navegador bloqueó el audio: invitamos a tocar el botón.
       sonando = false;
@@ -1242,12 +1170,11 @@ function arrancarMusica(){
 btnMusica.addEventListener('click', () => {
   if (!cancion) return;
   btnMusica.classList.remove('pide-toque');
-  prepararAudio();
   if (sonando){
     cancion.pause();
     sonando = false;
   } else {
-    cancion.play().then(() => { sonando = true; pintarBotonMusica(); subirVolumen(); }).catch(() => {});
+    cancion.play().then(() => { sonando = true; pintarBotonMusica(); }).catch(() => {});
     sonando = true;
   }
   pintarBotonMusica();

@@ -62,25 +62,12 @@ Todo lo editable está junto, en el bloque `CONFIG` al final de `index.html`:
 | `whatsapp` | Número que recibe las confirmaciones (con indicativo, sin `+`) |
 | `mapas.ceremonia` / `mapas.recepcion` | Los dos enlaces de Google Maps |
 | `esperaMusica` | Milisegundos antes de que arranque la canción |
-| `volumenMusica` | Volumen, de 0 a 1 |
 
-### Cómo cambiar el volumen
+La canción suena a su propio nivel, sin que la tarjeta lo toque, para que
+vaya pareja con el audio del video de apertura. Quien manda el volumen es el
+teléfono. Si quedara muy alta o muy baja, lo que hay que cambiar es el mp3,
+no el código.
 
-Abre `index.html`, busca `volumenMusica` cerca del final y cambia el número:
-
-```js
-volumenMusica: 0.05,   // 0 = mudo · 1 = máximo
-```
-
-Referencia rápida: `0.03` apenas se insinúa · `0.05` es el valor actual ·
-`0.10` se nota · `0.20` ya es música de fondo clara. Guarda, recarga la
-página y listo.
-
-**Por qué hacía falta Web Audio.** El iPhone ignora por completo
-`audio.volume` — ahí esa propiedad es de solo lectura y el volumen solo lo
-manda el botón físico del teléfono. Por eso la canción sonaba fuerte por más
-que se bajara el número. La tarjeta enruta la canción por un nodo de
-ganancia de Web Audio, que sí responde en iOS.
 
 Los textos (nombres, fecha, horas, la frase del centro) están en el HTML, en
 español y sin tecnicismos alrededor.
