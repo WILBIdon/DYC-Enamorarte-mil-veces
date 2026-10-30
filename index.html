@@ -264,7 +264,10 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 .revelado #fondoFloral{ opacity:1; transform:scale(1); transition:opacity 2200ms ease, transform 4200ms cubic-bezier(.2,.7,.25,1); }
 
 /* --- Encabezado --- */
-.invitacion{ color:var(--tinta-suave); }
+.invitacion{
+  color:var(--tinta-suave);
+  text-shadow:0 2px 11px rgba(14,9,5,.9), 0 1px 3px rgba(14,9,5,.75);
+}
 
 .ornamento{ display:block; margin:clamp(10px,1.9vh,20px) auto; color:var(--oro); }
 
@@ -336,8 +339,8 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   max-width:28rem;
   font-style:italic;
   font-weight:300;
-  font-size:clamp(1.24rem,min(6vw,3.1vh),2.05rem);
-  line-height:1.52;
+  font-size:clamp(1.52rem,min(7.4vw,3.8vh),2.55rem);
+  line-height:1.44;
   color:var(--tinta);
 }
 .frase .rombo{
@@ -346,9 +349,10 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 }
 .frase .segunda{
   display:block;
-  margin-top:.82em;
-  font-size:.82em;
+  margin-top:.8em;
+  font-size:.7em;
   color:var(--tinta-suave);
+  text-shadow:0 2px 10px rgba(14,9,5,.85), 0 1px 3px rgba(14,9,5,.7);
 }
 
 /* --- Botones pequeños --- */
@@ -441,6 +445,8 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 #musica svg{ width:48%; height:48%; }
 #musica .onda{ transform-origin:center; }
 #musica.sonando .onda{ animation:ondear 2.4s ease-in-out infinite; }
+#musica.sonando svg{ animation:girar 9s linear infinite; }
+@keyframes girar{ to{ transform:rotate(360deg); } }
 @keyframes ondear{ 0%,100%{ opacity:1;} 50%{ opacity:.35;} }
 #musica.pide-toque{ animation:llamar 2.2s ease-in-out infinite; }
 @keyframes llamar{ 0%,100%{ box-shadow:0 10px 26px -8px rgba(0,0,0,.7), 0 0 0 0 rgba(214,180,118,.55);} 50%{ box-shadow:0 10px 26px -8px rgba(0,0,0,.7), 0 0 0 13px rgba(214,180,118,0);} }
@@ -472,7 +478,7 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   height:calc(12px * var(--s));
   border-radius:62% 38% 54% 46% / 72% 66% 34% 28%;
   background:var(--tono);
-  box-shadow:0 1px 3px rgba(40,20,20,.22), inset 0 1px 1px rgba(255,255,255,.45);
+  box-shadow:0 1px 4px rgba(40,20,20,.14), inset 0 1px 1px rgba(255,255,255,.3);
   opacity:var(--o);
   animation:vaiven calc(var(--t) / 3.4) ease-in-out var(--d) infinite alternate;
   will-change:transform;
@@ -548,7 +554,7 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 .lugar h3{
   margin:0 0 .5em; font-family:var(--sans); font-weight:400;
   text-transform:uppercase; letter-spacing:.3em; text-indent:.3em;
-  font-size:clamp(.57rem,2vw,.68rem); color:var(--oro-fuerte);
+  font-size:clamp(.74rem,2.75vw,.9rem); color:var(--oro-fuerte);
 }
 .lugar .hora{
   margin:0 0 .22em;
@@ -567,6 +573,18 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   text-transform:uppercase; letter-spacing:.24em;
   font-size:clamp(.56rem,2vw,.66rem); color:var(--oro-fuerte);
 }
+.campo textarea{
+  width:100%; padding:.8em .9em;
+  font-family:var(--serif); font-size:clamp(1rem,3.6vw,1.06rem); color:var(--tinta);
+  background:rgba(255,248,232,.07);
+  border:1px solid var(--oro-tenue); border-radius:2px;
+  resize:vertical; min-height:4.6em; line-height:1.5;
+  transition:border-color .3s ease, background .3s ease;
+  -webkit-appearance:none; appearance:none;
+}
+.campo textarea::placeholder{ color:rgba(247,241,229,.42); }
+.campo textarea:focus{ outline:0; border-color:var(--oro-claro); background:rgba(255,248,232,.13); }
+.campo > span em{ font-style:italic; text-transform:none; letter-spacing:.04em; opacity:.75; }
 .campo input, .campo select{
   width:100%; padding:.8em .9em;
   font-family:var(--serif); font-size:clamp(1rem,3.6vw,1.06rem); color:var(--tinta);
@@ -607,7 +625,6 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 .plato .descripcion{ font-size:.82em; color:var(--tinta-suave); font-style:italic; }
 
 .enviar{ width:100%; margin-top:clamp(6px,1.6vw,10px); }
-.nota-form{ margin:1.1em 0 0; font-size:clamp(.82rem,3vw,.9rem); color:var(--tinta-suave); font-style:italic; line-height:1.55; }
 
 /* ===================================================================
    RESPONSIVE
@@ -763,9 +780,9 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 1.8 8 4l2-2.2 3.2 2a1 1 0 0 1 .4 1.2l-.9 2.3-1.3-.5v5.5a1 1 0 0 1-1 1H5.6a1 1 0 0 1-1-1V6.8l-1.3.5-.9-2.3a1 1 0 0 1 .4-1.2l3.2-2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
         Vestuario
       </button>
-      <button class="pastilla" type="button" data-modal="mLluvia">
-        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.9" y="4.2" width="12.2" height="8.6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="m2.3 4.7 5.1 4a1 1 0 0 0 1.2 0l5.1-4" stroke="currentColor" stroke-width="1.2"/></svg>
-        Lluvia de sobres
+      <button class="pastilla" type="button" data-modal="mLista">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.4 6.6h11.2v6.6a1 1 0 0 1-1 1H3.4a1 1 0 0 1-1-1V6.6z" stroke="currentColor" stroke-width="1.2"/><rect x="1.5" y="3.6" width="13" height="3" rx=".7" stroke="currentColor" stroke-width="1.2"/><path d="M8 3.6v10.6" stroke="currentColor" stroke-width="1.2"/><path d="M8 3.6S6.6 1.4 5.3 1.8c-1.1.3-1 1.8.2 1.8H8zM8 3.6s1.4-2.2 2.7-1.8c1.1.3 1 1.8-.2 1.8H8z" stroke="currentColor" stroke-width="1.2"/></svg>
+        Lista de novios
       </button>
       <button class="pastilla principal" type="button" data-modal="mConfirmar">
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.2 8.4 3 3 6.6-6.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -782,16 +799,11 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 </main>
 
 <div id="petalos" aria-hidden="true">
-  <span class="petalo" style="--x:5.9%;--t:19.0s;--d:-12.0s;--s:0.86;--o:0.76;--tono:linear-gradient(135deg, rgba(255,228,230,.98), rgba(234,172,181,.82))"><i></i></span>
-  <span class="petalo" style="--x:39.5%;--t:19.9s;--d:-8.7s;--s:1.63;--o:0.69;--tono:linear-gradient(135deg, rgba(255,241,228,.98), rgba(239,203,172,.8))"><i></i></span>
-  <span class="petalo" style="--x:69.3%;--t:21.1s;--d:-2.5s;--s:1.55;--o:0.58;--tono:linear-gradient(135deg, rgba(255,252,246,.98), rgba(236,221,195,.8))"><i></i></span>
-  <span class="petalo" style="--x:68.3%;--t:14.9s;--d:-12.6s;--s:1.41;--o:0.88;--tono:linear-gradient(135deg, rgba(252,218,223,.96), rgba(223,160,174,.8))"><i></i></span>
-  <span class="petalo" style="--x:22.9%;--t:22.3s;--d:-4.5s;--s:1.22;--o:0.74;--tono:linear-gradient(135deg, rgba(255,228,230,.98), rgba(234,172,181,.82))"><i></i></span>
-  <span class="petalo" style="--x:68.7%;--t:22.0s;--d:-17.8s;--s:1.57;--o:0.68;--tono:linear-gradient(135deg, rgba(255,241,228,.98), rgba(239,203,172,.8))"><i></i></span>
-  <span class="petalo" style="--x:59.5%;--t:16.4s;--d:-3.1s;--s:1.01;--o:0.57;--tono:linear-gradient(135deg, rgba(255,252,246,.98), rgba(236,221,195,.8))"><i></i></span>
-  <span class="petalo" style="--x:31.2%;--t:21.8s;--d:-19.1s;--s:1.46;--o:0.78;--tono:linear-gradient(135deg, rgba(252,218,223,.96), rgba(223,160,174,.8))"><i></i></span>
-  <span class="petalo" style="--x:11.6%;--t:13.3s;--d:-4.5s;--s:0.89;--o:0.71;--tono:linear-gradient(135deg, rgba(255,228,230,.98), rgba(234,172,181,.82))"><i></i></span>
-  <span class="petalo" style="--x:12.7%;--t:22.7s;--d:-13.4s;--s:1.61;--o:0.65;--tono:linear-gradient(135deg, rgba(255,241,228,.98), rgba(239,203,172,.8))"><i></i></span>
+  <span class="petalo" style="--x:12.3%;--t:23.0s;--d:-14.4s;--s:0.75;--o:0.28;--tono:linear-gradient(135deg, rgba(255,230,232,.9), rgba(236,182,190,.6))"><i></i></span>
+  <span class="petalo" style="--x:41.5%;--t:23.9s;--d:-10.4s;--s:1.21;--o:0.24;--tono:linear-gradient(135deg, rgba(255,245,235,.9), rgba(241,212,186,.58))"><i></i></span>
+  <span class="petalo" style="--x:67.4%;--t:25.1s;--d:-3.0s;--s:1.16;--o:0.19;--tono:linear-gradient(135deg, rgba(255,253,248,.9), rgba(238,226,205,.58))"><i></i></span>
+  <span class="petalo" style="--x:66.6%;--t:18.9s;--d:-15.1s;--s:1.08;--o:0.33;--tono:linear-gradient(135deg, rgba(255,230,232,.9), rgba(236,182,190,.6))"><i></i></span>
+  <span class="petalo" style="--x:27.1%;--t:26.3s;--d:-5.4s;--s:0.97;--o:0.27;--tono:linear-gradient(135deg, rgba(255,245,235,.9), rgba(241,212,186,.58))"><i></i></span>
 </div>
 
 <!-- ============ MÚSICA ============ -->
@@ -847,18 +859,20 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
       <path d="M2 8h26M64 8h26" stroke="currentColor" stroke-width="1" opacity=".55"/>
       <path d="M46 2.4c3 2.3 4.6 3.9 4.6 5.6S49 11.3 46 13.6c-3-2.3-4.6-3.9-4.6-5.6S43 4.7 46 2.4z" stroke="currentColor" stroke-width="1" opacity=".85"/>
     </svg>
-    <h2 id="tVestuario" style="margin:0">Traje formal</h2>
+    <h2 id="tVestuario" style="margin:0 0 .5em">Traje formal</h2>
+    <p style="margin:0">Hombre: corbata.<br>Mujer: vestido largo.</p>
   </div>
 </div>
 
-<div class="telon" id="mLluvia" hidden>
-  <div class="hoja" role="dialog" aria-modal="true" aria-labelledby="tLluvia">
+<div class="telon" id="mLista" hidden>
+  <div class="hoja" role="dialog" aria-modal="true" aria-labelledby="tLista">
     <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M1 1l13 13M14 1L1 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
     </button>
-    <h2 id="tLluvia">Lluvia de sobres</h2>
+    <h2 id="tLista">Lista de novios</h2>
     <p class="sub">Tu presencia es el regalo</p>
-    <p>Lo que de verdad queremos es verte ahí. Si además quieres acompañarnos a empezar esta nueva etapa, habrá un buzón en la recepción para tu sobre.</p>
+    <!-- CAMBIAR: aquí van los datos reales de la lista (almacén, enlace o cuenta). -->
+    <p>Lo que de verdad queremos es verte ahí. Si además quieres acompañarnos a empezar esta nueva etapa, pronto dejaremos aquí los datos de nuestra lista.</p>
     <svg class="ornamento" width="92" height="16" viewBox="0 0 92 16" fill="none" aria-hidden="true">
       <path d="M2 8h26M64 8h26" stroke="currentColor" stroke-width="1" opacity=".55"/>
       <path d="M46 2.4c3 2.3 4.6 3.9 4.6 5.6S49 11.3 46 13.6c-3-2.3-4.6-3.9-4.6-5.6S43 4.7 46 2.4z" stroke="currentColor" stroke-width="1" opacity=".85"/>
@@ -879,16 +893,6 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
       <label class="campo">
         <span>Tu nombre</span>
         <input type="text" name="nombre" required autocomplete="name" placeholder="Nombre y apellido">
-      </label>
-
-      <label class="campo">
-        <span>¿Cuántos asisten?</span>
-        <select name="personas">
-          <option value="1">1 persona</option>
-          <option value="2">2 personas</option>
-          <option value="3">3 personas</option>
-          <option value="4">4 personas</option>
-        </select>
       </label>
 
       <fieldset class="campo" style="border:0;padding:0;margin-inline:0">
@@ -912,8 +916,12 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
         </div>
       </fieldset>
 
+      <label class="campo">
+        <span>Un mensaje para los novios <em>(opcional)</em></span>
+        <textarea name="mensaje" rows="3" placeholder="Escríbeles unas palabras…"></textarea>
+      </label>
+
       <button class="boton-oro enviar" type="submit">Enviar confirmación</button>
-      <p class="nota-form">Se abrirá WhatsApp con tu confirmación lista para enviar.</p>
     </form>
   </div>
 </div>
@@ -936,7 +944,9 @@ const CONFIG = {
   // Milisegundos que espera la tarjeta antes de arrancar la canción
   esperaMusica: 5000,
 
-  volumenMusica: 0.09,
+  // Volumen de la canción, de 0 (mudo) a 1 (máximo).
+  // 0.05 ya es muy bajito; súbelo a 0.10 si lo quieres más presente.
+  volumenMusica: 0.05,
 };
 
 /* =================================================================== */
@@ -960,8 +970,42 @@ $('#mapaCeremonia').href = CONFIG.mapas.ceremonia;
 $('#mapaRecepcion').href = CONFIG.mapas.recepcion;
 
 /* ---------- Medios: el servidor dice qué hay en la carpeta ---------- */
-let cancion = null;
+let cancion  = null;   // el <audio>
+let contexto = null;   // AudioContext
+let ganancia = null;   // el nodo que de verdad controla el volumen
 let medios = { video: null, audio: null };
+
+/* iOS ignora audio.volume (allí es de solo lectura), así que el volumen
+   se controla con un nodo de ganancia de Web Audio. Hay que construirlo
+   dentro de un gesto del usuario. */
+function prepararAudio(){
+  if (!cancion || contexto) return;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;                       // sin Web Audio queda audio.volume
+  try {
+    contexto = new AC();
+    const fuente = contexto.createMediaElementSource(cancion);
+    ganancia = contexto.createGain();
+    ganancia.gain.value = 0;
+    fuente.connect(ganancia);
+    ganancia.connect(contexto.destination);
+    cancion.volume = 1;                  // el fino lo hace la ganancia
+  } catch (_) {
+    contexto = null;
+    ganancia = null;
+  }
+}
+
+function ponerVolumen(v, suave){
+  v = Math.max(0, Math.min(1, v));
+  if (ganancia && contexto){
+    const t = contexto.currentTime;
+    if (suave) ganancia.gain.setTargetAtTime(v, t, 0.7);
+    else       ganancia.gain.setValueAtTime(v, t);
+  } else if (cancion){
+    cancion.volume = v;
+  }
+}
 
 const mediosListos = fetch('/api/media')
   .then((r) => r.json())
@@ -975,6 +1019,7 @@ const mediosListos = fetch('/api/media')
       cancion = new Audio(encodeURIComponent(m.audio));
       cancion.loop = true;
       cancion.preload = 'auto';
+      cancion.crossOrigin = 'anonymous';
       cancion.volume = 0;
     }
   })
@@ -993,8 +1038,13 @@ $('#abrir').addEventListener('click', async () => {
   if (abierta) return;
   abierta = true;
 
-  // El clic desbloquea el audio: lo aprovechamos para dejar la canción lista.
-  if (cancion) { cancion.play().then(() => cancion.pause()).catch(() => {}); }
+  // El clic desbloquea el audio: lo aprovechamos para armar el nodo de
+  // ganancia y dejar la canción lista.
+  if (cancion) {
+    prepararAudio();
+    ponerVolumen(0);
+    cancion.play().then(() => cancion.pause()).catch(() => {});
+  }
 
   await mediosListos;
   precargarFondo();
@@ -1078,13 +1128,7 @@ function pintarBotonMusica(){
 }
 
 function subirVolumen(){
-  const meta = CONFIG.volumenMusica;
-  const paso = meta / 45;
-  const t = setInterval(() => {
-    if (!cancion || cancion.paused) { clearInterval(t); return; }
-    cancion.volume = Math.min(meta, cancion.volume + paso);
-    if (cancion.volume >= meta - 0.001) clearInterval(t);
-  }, 60);
+  ponerVolumen(CONFIG.volumenMusica, true);
 }
 
 function arrancarMusica(){
@@ -1092,7 +1136,9 @@ function arrancarMusica(){
   btnMusica.hidden = false;
   requestAnimationFrame(() => btnMusica.classList.add('visible'));
 
-  cancion.volume = 0;
+  prepararAudio();
+  if (contexto && contexto.state === 'suspended') contexto.resume().catch(() => {});
+  ponerVolumen(0);
   cancion.play()
     .then(() => { sonando = true; pintarBotonMusica(); subirVolumen(); })
     .catch(() => {
@@ -1106,6 +1152,7 @@ function arrancarMusica(){
 btnMusica.addEventListener('click', () => {
   if (!cancion) return;
   btnMusica.classList.remove('pide-toque');
+  if (contexto && contexto.state === 'suspended') contexto.resume().catch(() => {});
   if (sonando){
     cancion.pause();
     sonando = false;
@@ -1160,11 +1207,12 @@ document.addEventListener('keydown', (e) => {
 $('#formRsvp').addEventListener('submit', (e) => {
   e.preventDefault();
   const d = new FormData(e.target);
+  const nota = (d.get('mensaje') || '').trim();
   const texto =
     '¡Hola, Daniela y Camilo! Confirmo mi asistencia a su boda.\n\n' +
     'Nombre: ' + d.get('nombre') + '\n' +
-    'Asistentes: ' + d.get('personas') + '\n' +
-    'Plato: ' + d.get('plato');
+    'Plato: ' + d.get('plato') +
+    (nota ? '\n\n' + nota : '');
   window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
 });
 </script>
