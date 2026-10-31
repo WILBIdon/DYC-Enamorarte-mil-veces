@@ -4,8 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Daniela & Camilo · 12 de diciembre de 2026</title>
-<meta name="description" content="Estás invitado a nuestra boda. Daniela Muñoz y Camilo Ortiz · Sábado 12 de diciembre de 2026.">
+<meta name="description" content="Estás invitado a nuestra boda. Daniela y Camilo · Sábado 12 de diciembre de 2026.">
 <meta name="theme-color" content="#1b1410">
+
+<!-- Icono de la pestaña y de la pantalla de inicio del teléfono. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <!-- Lo que se ve al compartir el enlace por WhatsApp, Instagram o Facebook.
      El servidor rellena __ORIGEN__ y __OG__ según el dominio y la imagen
@@ -14,7 +19,7 @@
 <meta property="og:locale" content="es_CO">
 <meta property="og:site_name" content="Daniela &amp; Camilo">
 <meta property="og:title" content="Daniela y Camilo · Enamorarte mil veces">
-<meta property="og:description" content="Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Rionegro.">
+<meta property="og:description" content="Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Medellín.">
 <meta property="og:url" content="__ORIGEN__/">
 <meta property="og:image" content="__ORIGEN__/__OG__">
 <!-- Algunas versiones de WhatsApp piden la variante segura y el tipo. -->
@@ -26,13 +31,13 @@
 <meta property="og:image:alt" content="Daniela y Camilo — Enamorarte mil veces">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Daniela y Camilo · Enamorarte mil veces">
-<meta name="twitter:description" content="Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Rionegro.">
+<meta name="twitter:description" content="Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Medellín.">
 <meta name="twitter:image" content="__ORIGEN__/__OG__">
 <!-- Respaldos para clientes viejos que no leen Open Graph -->
 <link rel="image_src" href="__ORIGEN__/__OG__">
 <meta itemprop="image" content="__ORIGEN__/__OG__">
 <meta itemprop="name" content="Daniela y Camilo · Enamorarte mil veces">
-<meta itemprop="description" content="Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Rionegro.">
+<meta itemprop="description" content="Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Medellín.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
@@ -686,6 +691,19 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 .plato .descripcion{ font-size:.82em; color:var(--tinta-suave); font-style:italic; }
 
 .enviar{ width:100%; margin-top:clamp(6px,1.6vw,10px); }
+.enviar[disabled]{ opacity:.6; cursor:default; }
+.gracias{
+  margin:0; text-align:center;
+  font-family:var(--serif); font-weight:400;
+  font-size:clamp(1.34rem,5.2vw,1.62rem);
+  color:var(--oro-nombres);
+}
+.gracias span{
+  display:block; margin-top:.7em;
+  font-family:var(--serif); font-style:italic;
+  font-size:clamp(.96rem,3.5vw,1.05rem);
+  line-height:1.6; color:var(--tinta-suave);
+}
 
 /* ===================================================================
    RESPONSIVE
@@ -811,9 +829,9 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 
     <div class="halo-nombres entra" style="--i:2">
       <h1 class="nombres-novios">
-        <span class="novio">Daniela Muñoz</span>
+        <span class="novio">Daniela</span>
         <span class="ampersand">y</span>
-        <span class="novio">Camilo Ortiz</span>
+        <span class="novio">Camilo</span>
       </h1>
     </div>
 
@@ -822,7 +840,7 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
     <div class="fecha entra" style="--i:4">
       <div class="lado">Sábado<br>Diciembre</div>
       <div class="dia">12</div>
-      <div class="lado">2026<br>Rionegro</div>
+      <div class="lado">2026<br>Medellín</div>
     </div>
 
     <blockquote class="frase entra" style="--i:5" id="fraseCentral">
@@ -844,8 +862,8 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
         Vestuario
       </button>
       <button class="pastilla" type="button" data-modal="mLista">
-        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.4 6.6h11.2v6.6a1 1 0 0 1-1 1H3.4a1 1 0 0 1-1-1V6.6z" stroke="currentColor" stroke-width="1.2"/><rect x="1.5" y="3.6" width="13" height="3" rx=".7" stroke="currentColor" stroke-width="1.2"/><path d="M8 3.6v10.6" stroke="currentColor" stroke-width="1.2"/><path d="M8 3.6S6.6 1.4 5.3 1.8c-1.1.3-1 1.8.2 1.8H8zM8 3.6s1.4-2.2 2.7-1.8c1.1.3 1 1.8-.2 1.8H8z" stroke="currentColor" stroke-width="1.2"/></svg>
-        Lista de novios
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.6" y="3.5" width="12.8" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="m2.1 4.3 5.9 4.3 5.9-4.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Lluvia de sobres
       </button>
       <button class="pastilla principal" type="button" data-modal="mConfirmar">
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.2 8.4 3 3 6.6-6.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -898,13 +916,13 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M1 1l13 13M14 1L1 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
     </button>
     <h2 id="tUbicacion">Dónde y cuándo</h2>
-    <p class="sub">Sábado 12 de diciembre, en Rionegro</p>
+    <p class="sub">Sábado 12 de diciembre, en Medellín y Rionegro</p>
 
     <div class="lugar">
       <h3>Ceremonia</h3>
       <p class="hora">2:00 p.m.</p>
       <p class="nombre">Iglesia Parroquia Padre Marianito</p>
-      <p class="detalle">Rionegro, Antioquia</p>
+      <p class="detalle">Altos del Poblado, Medellín</p>
       <a class="pastilla" id="mapaCeremonia" href="#" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.6c2.4 0 4.3 1.9 4.3 4.3 0 3-4.3 8.5-4.3 8.5S3.7 8.9 3.7 5.9C3.7 3.5 5.6 1.6 8 1.6z" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="5.9" r="1.6" stroke="currentColor" stroke-width="1.2"/></svg>
         Abrir en Google Maps
@@ -933,8 +951,9 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
       <path d="M2 8h26M64 8h26" stroke="currentColor" stroke-width="1" opacity=".55"/>
       <path d="M46 2.4c3 2.3 4.6 3.9 4.6 5.6S49 11.3 46 13.6c-3-2.3-4.6-3.9-4.6-5.6S43 4.7 46 2.4z" stroke="currentColor" stroke-width="1" opacity=".85"/>
     </svg>
-    <h2 id="tVestuario" style="margin:0 0 .5em">Traje formal</h2>
-    <p style="margin:0">Hombre: corbata.<br>Mujer: vestido largo.</p>
+    <h2 id="tVestuario" style="margin:0 0 .5em">Formal casual</h2>
+    <p style="margin:0">Hombre: saco, sin corbata.<br>Mujer: vestido midi o largo.</p>
+    <p class="micro" style="margin:.9em 0 0;color:var(--tinta-suave)">Elegantes, pero cómodos</p>
   </div>
 </div>
 
@@ -943,10 +962,9 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
     <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M1 1l13 13M14 1L1 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
     </button>
-    <h2 id="tLista">Lista de novios</h2>
+    <h2 id="tLista">Lluvia de sobres</h2>
     <p class="sub">Tu presencia es el regalo</p>
-    <!-- CAMBIAR: aquí van los datos reales de la lista (almacén, enlace o cuenta). -->
-    <p>Lo que de verdad queremos es verte ahí. Si además quieres acompañarnos a empezar esta nueva etapa, pronto dejaremos aquí los datos de nuestra lista.</p>
+    <p>Lo que de verdad queremos es verte ahí. Si además quieres darnos un detalle, preferimos la lluvia de sobres: ese día habrá un buzón en la recepción.</p>
     <svg class="ornamento" width="92" height="16" viewBox="0 0 92 16" fill="none" aria-hidden="true">
       <path d="M2 8h26M64 8h26" stroke="currentColor" stroke-width="1" opacity=".55"/>
       <path d="M46 2.4c3 2.3 4.6 3.9 4.6 5.6S49 11.3 46 13.6c-3-2.3-4.6-3.9-4.6-5.6S43 4.7 46 2.4z" stroke="currentColor" stroke-width="1" opacity=".85"/>
@@ -1005,12 +1023,18 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
    CONFIG — lo editable
    =================================================================== */
 const CONFIG = {
-  // Número de WhatsApp que recibe las confirmaciones (código de país, sin + ni espacios)
-  whatsapp: '573000000000',
+  // Número de WhatsApp de respaldo (código de país, sin + ni espacios).
+  // Recibe la confirmación si la hoja de Google no contesta.
+  whatsapp: '573002436120',
+
+  // Hoja de Google que recibe las confirmaciones. Pega aquí la dirección
+  // que te da Apps Script al publicar (la que termina en /exec); los pasos
+  // están en el README. Mientras esté vacía, todo se va por WhatsApp.
+  hojaConfirmaciones: '',
 
   mapas: {
     ceremonia: 'https://www.google.com/maps/search/?api=1&query=' +
-               encodeURIComponent('Parroquia Padre Marianito, Rionegro, Antioquia'),
+               encodeURIComponent('Parroquia Padre Marianito, Carrera 24B #17-110, El Poblado, Medellín'),
     recepcion: 'https://www.google.com/maps/search/?api=1&query=' +
                encodeURIComponent('Bárbaro Cocina Primitiva, Rionegro, Antioquia'),
   },
@@ -1226,7 +1250,7 @@ btnCompartir.addEventListener('click', async () => {
   const enlace = location.origin + location.pathname;
   const datos = {
     title: 'Daniela y Camilo · Enamorarte mil veces',
-    text: 'Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Rionegro.',
+    text: 'Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Medellín.',
     url: enlace,
   };
 
@@ -1283,17 +1307,64 @@ document.addEventListener('keydown', (e) => {
   if (abierto) cerrarModal(abierto);
 });
 
-/* ---------- Confirmación por WhatsApp ---------- */
-$('#formRsvp').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const d = new FormData(e.target);
-  const nota = (d.get('mensaje') || '').trim();
+/* ---------- Confirmación: a la hoja de Google, con WhatsApp de respaldo ----------
+
+   Si CONFIG.hojaConfirmaciones está vacía, la confirmación se va por
+   WhatsApp como siempre. Si la hoja está puesta pero no contesta, la
+   confirmación tampoco se pierde: se abre WhatsApp. */
+
+const formRsvp = $('#formRsvp');
+const btnEnviar = formRsvp.querySelector('.enviar');
+
+function abrirWhatsApp(d, nota){
   const texto =
     '¡Hola, Daniela y Camilo! Confirmo mi asistencia a su boda.\n\n' +
     'Nombre: ' + d.get('nombre') + '\n' +
     'Plato: ' + d.get('plato') +
     (nota ? '\n\n' + nota : '');
   window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+}
+
+function darGracias(nombre){
+  const primero = String(nombre || '').trim().split(/\s+/)[0];
+  const p = document.createElement('p');
+  p.className = 'gracias';
+  p.textContent = primero ? '¡Gracias, ' + primero + '!' : '¡Gracias!';
+  const detalle = document.createElement('span');
+  detalle.textContent = 'Tu confirmación quedó registrada. Nos vemos el 12 de diciembre.';
+  p.appendChild(detalle);
+  formRsvp.replaceChildren(p);
+}
+
+formRsvp.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const d = new FormData(e.target);
+  const nota = (d.get('mensaje') || '').trim();
+
+  if (!CONFIG.hojaConfirmaciones){
+    abrirWhatsApp(d, nota);
+    return;
+  }
+
+  btnEnviar.disabled = true;
+  btnEnviar.textContent = 'Enviando…';
+
+  try {
+    await fetch(CONFIG.hojaConfirmaciones, {
+      method: 'POST',
+      body: new URLSearchParams({
+        nombre: d.get('nombre') || '',
+        plato: d.get('plato') || '',
+        mensaje: nota,
+      }),
+    });
+    darGracias(d.get('nombre'));
+  } catch (_) {
+    btnEnviar.disabled = false;
+    btnEnviar.textContent = 'Enviar confirmación';
+    decir('No pudimos guardarla. Te llevamos a WhatsApp.');
+    abrirWhatsApp(d, nota);
+  }
 });
 </script>
 </body>

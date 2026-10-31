@@ -1,0 +1,16 @@
+{
+  "name": "Daniela y Camilo · 12 de diciembre de 2026",
+  "short_name": "Daniela y Camilo",
+  "description": "Estás invitado a nuestra boda. Sábado 12 de diciembre de 2026, Medellín.",
+  "lang": "es-CO",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1b1410",
+  "theme_color": "#1b1410",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

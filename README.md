@@ -1,6 +1,7 @@
 # Daniela & Camilo — Tarjeta de matrimonio
 
-Invitación digital. Sábado 12 de diciembre de 2026, Rionegro (Antioquia).
+Invitación digital. Sábado 12 de diciembre de 2026. Ceremonia en Altos del
+Poblado, Medellín; recepción en Rionegro (Antioquia).
 
 ## Cómo se ve
 
@@ -30,9 +31,10 @@ reemplazar el archivo — no hay que tocar código.
 | --- | --- |
 | `portada.webp` / `.jpg` | Fondo de la portada |
 | `fondo.webp` / `.jpg` | Fondo de la tarjeta |
-| `nuevo video.mp4` | El video de apertura |
+| `nuevo video con texto.mp4` | El video de apertura (27 s) |
 | `Enamorarte Mil Veces.mp3` | La canción |
 | `og.jpg` | Lo que se ve al compartir el enlace |
+| `favicon.ico`, `apple-touch-icon.png`, `icon-*.png` | El icono de la pestaña y de la pantalla de inicio |
 
 ### La imagen al compartir
 
@@ -59,7 +61,8 @@ Todo lo editable está junto, en el bloque `CONFIG` al final de `index.html`:
 
 | Campo | Qué controla |
 | --- | --- |
-| `whatsapp` | Número que recibe las confirmaciones (con indicativo, sin `+`) |
+| `hojaConfirmaciones` | Dirección de la hoja de Google que recibe las confirmaciones |
+| `whatsapp` | Número de respaldo si la hoja falla (con indicativo, sin `+`) |
 | `mapas.ceremonia` / `mapas.recepcion` | Los dos enlaces de Google Maps |
 | `esperaMusica` | Milisegundos antes de que arranque la canción |
 
@@ -71,6 +74,38 @@ no el código.
 
 Los textos (nombres, fecha, horas, la frase del centro) están en el HTML, en
 español y sin tecnicismos alrededor.
+
+## Las confirmaciones en una hoja de Google
+
+Las confirmaciones pueden caer solas en una hoja de cálculo tuya. El archivo
+`confirmaciones.gs` trae el código y los pasos escritos arriba del todo; en
+resumen son cinco:
+
+1. Crea una hoja nueva en <https://sheets.google.com>.
+2. Menú **Extensiones → Apps Script**.
+3. Borra lo que haya y pega todo `confirmaciones.gs`. Guarda.
+4. **Implementar → Nueva implementación**, tipo *Aplicación web*, ejecutar
+   como *yo*, acceso para **cualquier usuario**. Google te pedirá permiso
+   una vez.
+5. Copia la dirección que termina en `/exec` y pégala en `index.html`, en
+   `CONFIG.hojaConfirmaciones`.
+
+Queda una fila por invitado con fecha, nombre, plato y el mensaje que te
+dejen. Para que además te llegue un correo con cada confirmación, dentro de
+`confirmaciones.gs` hay una línea de `MailApp` lista: solo quítale las dos
+barras y escribe tu correo.
+
+Mientras `hojaConfirmaciones` esté vacía, las confirmaciones siguen llegando
+por WhatsApp, como antes. Y si algún día la hoja no responde, la tarjeta no
+pierde la confirmación: la manda por WhatsApp y avisa al invitado.
+
+## El icono
+
+El monograma D & C en dorado sobre el fondo de la tarjeta. Son cinco
+archivos (`favicon.ico` para la pestaña, `apple-touch-icon.png` para el
+iPhone, y los `icon-*.png` para Android, que los lee desde
+`site.webmanifest`). Los tres tamaños del `.ico` están dibujados por
+separado para que a 16 px se lean las letras.
 
 ## Despliegue
 

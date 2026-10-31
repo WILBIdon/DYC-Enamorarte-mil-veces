@@ -2,7 +2,7 @@
   "name": "dyc-enamorarte-mil-veces",
   "version": "1.0.0",
   "private": true,
-  "description": "Tarjeta digital de matrimonio — Daniela Muñoz y Camilo Ortiz, 12 de diciembre de 2026",
+  "description": "Tarjeta digital de matrimonio — Daniela y Camilo, 12 de diciembre de 2026",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
