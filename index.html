@@ -1027,6 +1027,11 @@ const CONFIG = {
   // Recibe la confirmación si la hoja de Google no contesta.
   whatsapp: '573002436120',
 
+  // Además de guardar en la hoja, abrirle WhatsApp al invitado con el
+  // mensaje ya escrito hacia tu número. Ponlo en false si algún día
+  // prefieres que solo quede en la hoja, sin sacar a nadie de la tarjeta.
+  avisarPorWhatsApp: true,
+
   // Hoja de Google que recibe las confirmaciones. Pega aquí la dirección
   // que te da Apps Script al publicar (la que termina en /exec); los pasos
   // están en el README. Mientras esté vacía, todo se va por WhatsApp.
@@ -1323,10 +1328,13 @@ function abrirWhatsApp(d, nota){
     'Nombre: ' + d.get('nombre') + '\n' +
     'Plato: ' + d.get('plato') +
     (nota ? '\n\n' + nota : '');
-  window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(texto), '_blank', 'noopener');
+  const ventana = window.open(
+    'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(texto), '_blank');
+  if (ventana) ventana.opener = null;
+  return ventana;
 }
 
-function darGracias(nombre){
+function darGracias(nombre, reintentar){
   const primero = String(nombre || '').trim().split(/\s+/)[0];
   const p = document.createElement('p');
   p.className = 'gracias';
@@ -1335,6 +1343,17 @@ function darGracias(nombre){
   detalle.textContent = 'Tu confirmación quedó registrada. Nos vemos el 12 de diciembre.';
   p.appendChild(detalle);
   formRsvp.replaceChildren(p);
+
+  // Si el navegador bloqueó la ventana de WhatsApp (pasa en algunos
+  // teléfonos), el invitado la abre con este botón, que sí es un toque suyo.
+  if (reintentar){
+    const boton = document.createElement('button');
+    boton.type = 'button';
+    boton.className = 'boton-oro enviar';
+    boton.textContent = 'Avisarles por WhatsApp';
+    boton.addEventListener('click', () => abrirWhatsApp(...reintentar));
+    formRsvp.appendChild(boton);
+  }
 }
 
 formRsvp.addEventListener('submit', async (e) => {
@@ -1359,7 +1378,8 @@ formRsvp.addEventListener('submit', async (e) => {
         mensaje: nota,
       }),
     });
-    darGracias(d.get('nombre'));
+    const ventana = CONFIG.avisarPorWhatsApp ? abrirWhatsApp(d, nota) : true;
+    darGracias(d.get('nombre'), ventana ? null : [d, nota]);
   } catch (_) {
     btnEnviar.disabled = false;
     btnEnviar.textContent = 'Enviar confirmación';
