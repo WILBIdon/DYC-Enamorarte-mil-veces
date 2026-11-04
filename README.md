@@ -31,7 +31,7 @@ reemplazar el archivo — no hay que tocar código.
 | --- | --- |
 | `portada.webp` / `.jpg` | Fondo de la portada |
 | `fondo.webp` / `.jpg` | Fondo de la tarjeta |
-| `nuevo video con texto.mp4` | El video de apertura (27 s, 4,3 MB) |
+| `final video.mp4` | El video de apertura (29,9 s, 5,5 MB) |
 | `Enamorarte Mil Veces.mp3` | La canción |
 | `og.jpg` | Lo que se ve al compartir el enlace |
 | `favicon.ico`, `apple-touch-icon.png`, `icon-*.png` | El icono de la pestaña y de la pantalla de inicio |
@@ -123,14 +123,18 @@ sirve cualquiera sin configurar nada.
 El video y el fondo floral empiezan a bajar mientras el invitado todavía ve
 la portada, de modo que al tocar *Abrir tarjeta* no hay espera. Los medios se
 guardan en el navegador una semana: quien vuelva a entrar no baja otra vez
-los 4,3 MB del video. El HTML nunca se cachea, así los cambios se ven al
+los 5,5 MB del video. El HTML nunca se cachea, así los cambios se ven al
 recargar.
 
-El video de apertura va a 1200 kbps en vez de los 2500 originales: pesa
-4,3 MB en lugar de 8,4, con la misma resolución de 720 × 1280 y el índice
-al principio, para que empiece a verse sin bajarlo entero. Medido cuadro a
-cuadro contra el original da 40,9 dB de PSNR, el mismo listón que los
-fondos.
+El video de apertura va a 1400 kbps en vez de los 2290 originales: pesa
+5,5 MB en lugar de 8,6, con la misma resolución de 720 × 1280, su audio
+intacto y el índice al principio, para que empiece a verse sin bajarlo
+entero. Medido cuadro a cuadro contra el original da 40,1 dB de PSNR, el
+mismo listón que los fondos.
+
+Si cambias el video, basta con soltar el archivo nuevo en esta carpeta: el
+servidor toma el primero por orden alfabético. Conviene dejar uno solo,
+para que no quede dependiendo del nombre.
 
 Los dos fondos van en WebP, con respaldo JPEG para navegadores viejos: pesan
 921 KB entre los dos en vez de 4,9 MB, sin diferencia visible (43 y 42 dB de
